@@ -4,8 +4,6 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 from dotenv import load_dotenv, set_key, find_dotenv
 import os
 
-# метод __init__ используется для установки начальных значений атрибутов объектов,
-# которые будут создаваться в этом классе. base_url - это атрибут
 class Zojnik:
     def __init__(self):
         self.base_url = 'https://api.dev.zojnikfood.ru'
@@ -13,14 +11,10 @@ class Zojnik:
         load_dotenv(dotenv_path)
         self.dotenv_path = dotenv_path  # Сохранение пути к .env файлу
 
-    # Метод для получения аутентификационного ключа, МЫ определяем названия переменных
-    # Для передачи данных в теле запроса (так указано в документации) создаётся словарь data
-    # в кавычках - это точное название из документации, после : наши переменные
     def get_access_and_refresh_token_pair(self, username: str, password: str) -> json:
         '''Метод делает запрос к API сервера и возвращает статус запроса и результат в формате JSON с уникальной парой
         из access token и refresh token, найденным по указанным username и password'''
 
-        # Важно указать тип данных, передаваемых в теле запроса. Без этого - не работает. headers - это тоже словарь
         headers = {
             'Content-Type': 'application/json'
         }
@@ -30,23 +24,11 @@ class Zojnik:
             'password': password
         }
 
-        # отправляем POST-запрос
-        # создаём переменную response для записи в неё ответа от сервера
-        # post - тип запроса из документации, url - из документации,
-        # первый headers - это "ключевое слово", второй headers - это наш словарь
         response = requests.post(self.base_url + '/api/auth/jwt/create/', headers = headers, json=data)
 
-        # status - переменная для сохранения статус-кода из ответа от сервера
-        # result = ""  - объявляем переменную для сохранения ответа от сервера
         status = response.status_code
         result = ""
 
-        # присваиваем переменной result ответ от сервера в формате json
-        # на случай, если json извлечь не получилось, выведем в виде текста
-        # return используется для завершения работы функции/метода и возвращает указанные данные туда,
-        # где функция/метод вызывается
-        # исключение JSONDecodeError возникает при невозможности декодировать ответ в JSON формат. Можно оставить блок
-        # except пустым, но лучше указать конкретный тип исключения
         try:
             result = response.json()
         except json.decoder.JSONDecodeError:
