@@ -3,13 +3,8 @@ from settings import (admin_username, valid_email, admin_password, valid_passwor
                       valid_access_token, valid_email_2, valid_password_2, new_valid_password, user_id)
 import os
 
-# Создание нового объекта внутри класса Zojnik. Когда мы вызываем Zojnik(), создается новый экземпляр
-# класса Zojnik (то есть объект), используя конструктор __init__. Переменная zf затем ссылается
-# на этот объект, и мы можем использовать zf для доступа к атрибутам и методам этого объекта.
 zf = Zojnik()
 
-# Определяем переменные и задаём им начальные значения
-# Далее вызов метода get_api_key и запись результатов в переменные status и result
 def test_successful_get_access_and_refresh_token_pair(username=valid_email, password=valid_password):
     """ Takes a set of user credentials and returns an access and refresh JSON web token pair to prove
     the authentication of those credentials."""
